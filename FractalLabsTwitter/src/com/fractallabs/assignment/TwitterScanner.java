@@ -1,5 +1,6 @@
 package com.fractallabs.assignment;
 
+import java.text.DecimalFormat;
 import java.time.Instant;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -17,6 +18,7 @@ import twitter4j.conf.ConfigurationBuilder;
 public class TwitterScanner {
 	static int count = 0;
 	TreeMap <Instant, Double> storeValues = new TreeMap<>();
+	TreeMap <Instant, Double> percentageChange = new TreeMap<>();
 
 	public static class TSValue {
 		private final Instant timestamp;
@@ -85,19 +87,29 @@ public class TwitterScanner {
 		System.out.println("Last key: " + lastKey);
 		double lastValue = storeValues.get(lastKey);
 		System.out.println("Last entry: " + lastValue);
+		DecimalFormat df = new DecimalFormat("#.00"); 
+		double change;
 		if (count/lastValue > 1) {
-			System.out.println("Over last hour, increase of " + (count/lastValue) * 100 + "%");
+			System.out.println("Over last hour, increase of " + (df.format((count - lastValue)/lastValue * 100)) + "%");
+			change = (count - lastValue)/lastValue * 100;
+		}
+		else if (count/lastValue == 1) {
+			System.out.println("No change over the past hour");
+			change = 0;
 		}
 		else  {
-			System.out.println("Over last hour, decrease of " + (1 - (count/lastValue)  * 100 + "%"));
+			System.out.println("Over last hour, decrease of " + (df.format((lastValue - count)/lastValue  * 100)) + "%");
+			change = (lastValue - count)/lastValue  * 100;
 		}
 		storeValues.put(value.getTimestamp(), value.getVal());
+		percentageChange.put(value.getTimestamp(), change);
 		}
 	}
 	
 
 	public static void main(String... args) {
 		TwitterScanner scanner = new TwitterScanner("Wilson");
+		System.out.println(Instant.now());
 		scanner.startTimer();
 		scanner.run();
 	}
@@ -114,7 +126,6 @@ public class TwitterScanner {
 		    	count = 0;
 		    }
 		}, 10000, 1000*10);
-	
 }
 	
 }
