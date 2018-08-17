@@ -16,9 +16,8 @@ import twitter4j.TwitterStreamFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
 public class TwitterScanner {
-	static int count = 0;
+	int count = 0;
 	TreeMap <Instant, Double> storeValues = new TreeMap<>();
-	TreeMap <Instant, Double> percentageChange = new TreeMap<>();
 
 	public static class TSValue {
 		private final Instant timestamp;
@@ -54,13 +53,23 @@ public class TwitterScanner {
 		            	System.out.println(count);
 		            	System.out.println(status);
 		            }
-		            public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {}
-		            public void onTrackLimitationNotice(int numberOfLimitedStatuses) {}
-		            public void onException(Exception ex) {}
+		            public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
+		                System.out.println("Status deletion notice id:" + statusDeletionNotice.getStatusId());
+		            }
+		            public void onTrackLimitationNotice(int numberOfLimitedStatuses) {
+		                System.out.println("Track limitation notice:" + numberOfLimitedStatuses);
+		            }
+		            public void onException(Exception ex) {
+		            	ex.printStackTrace();
+		            }
 		            @Override
-		            public void onScrubGeo(long arg0, long arg1) {}
+		            public void onScrubGeo(long userId, long upToStatusId) {
+		                System.out.println("Scrub_geo. User id:" + userId + " up to status id:" + upToStatusId);
+		            }
 		            @Override
-		            public void onStallWarning(StallWarning arg0) {}            
+		            public void onStallWarning(StallWarning warning) {
+		                System.out.println("Stall stall warning:" + warning);
+		            }            
 		        };
 	        
 	        TwitterStreamFactory tf = new TwitterStreamFactory(cb.build());
@@ -72,21 +81,14 @@ public class TwitterScanner {
 	public void run() {
 		// Begin aggregating mentions. Every hour, "store" the relative change
 		// (e.g. write it to System.out).
-
-
-	}
-
-	private void storeValue(TSValue value) {
-		// ...
-		if (storeValues.size() == 0) {
-			storeValues.put(value.getTimestamp(), value.getVal());
-		}
-		else {
-		System.out.println("TreeMap Size is " + storeValues.size());
 		Instant lastKey = storeValues.lastKey();
 		System.out.println("Last key: " + lastKey);
 		double lastValue = storeValues.get(lastKey);
 		System.out.println("Last entry: " + lastValue);
+		calculatePercentage(lastValue);
+	}
+
+	public double calculatePercentage(double lastValue) {
 		DecimalFormat df = new DecimalFormat("#.00"); 
 		double change;
 		if (count/lastValue > 1) {
@@ -101,17 +103,26 @@ public class TwitterScanner {
 			System.out.println("Over last hour, decrease of " + (df.format((lastValue - count)/lastValue  * 100)) + "%");
 			change = (lastValue - count)/lastValue  * 100;
 		}
+		return change;
+	}
+
+	protected void storeValue(TSValue value) {
+		// ...
+		if (storeValues.size() == 0) {
+			storeValues.put(value.getTimestamp(), value.getVal());
+		}
+		else {
+			System.out.println("TreeMap Size is " + storeValues.size());
+			run();
 		storeValues.put(value.getTimestamp(), value.getVal());
-		percentageChange.put(value.getTimestamp(), change);
 		}
 	}
+	
 	
 
 	public static void main(String... args) {
 		TwitterScanner scanner = new TwitterScanner("Wilson");
-		System.out.println(Instant.now());
 		scanner.startTimer();
-		scanner.run();
 	}
 	
 	public void startTimer() {

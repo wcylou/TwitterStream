@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="TwitterScannerTest" project="FractalLabsTwitter" tests="3" started="3" failures="0" errors="0" ignored="0">
+  <testsuite name="com.fractallabs.assignment.TwitterScannerTest" time="0.813" displayname="TwitterScannerTest" uniqueid="[engine:junit-jupiter]/[class:com.fractallabs.assignment.TwitterScannerTest]">
+    <testcase name="testPercentageChange" classname="com.fractallabs.assignment.TwitterScannerTest" time="0.185" displayname="testPercentageChange()" uniqueid="[engine:junit-jupiter]/[class:com.fractallabs.assignment.TwitterScannerTest]/[method:testPercentageChange()]"/>
+    <testcase name="test" classname="com.fractallabs.assignment.TwitterScannerTest" time="0.021" displayname="Test deposit adds to balance." uniqueid="[engine:junit-jupiter]/[class:com.fractallabs.assignment.TwitterScannerTest]/[method:test()]"/>
+    <testcase name="testAuthWithBuildingConf1" classname="com.fractallabs.assignment.TwitterScannerTest" time="0.607" displayname="testAuthWithBuildingConf1()" uniqueid="[engine:junit-jupiter]/[class:com.fractallabs.assignment.TwitterScannerTest]/[method:testAuthWithBuildingConf1()]"/>
+  </testsuite>
+</testrun>

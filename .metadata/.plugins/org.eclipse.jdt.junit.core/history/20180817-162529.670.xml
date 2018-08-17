@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="TwitterScannerTest" project="FractalLabsTwitter" tests="5" started="5" failures="0" errors="0" ignored="0">
+  <testsuite name="com.fractallabs.assignment.TwitterScannerTest" time="1.102" displayname="TwitterScannerTest" uniqueid="[engine:junit-jupiter]/[class:com.fractallabs.assignment.TwitterScannerTest]">
+    <testcase name="testPositivePercentageChange" classname="com.fractallabs.assignment.TwitterScannerTest" time="0.158" displayname="testPositivePercentageChange()" uniqueid="[engine:junit-jupiter]/[class:com.fractallabs.assignment.TwitterScannerTest]/[method:testPositivePercentageChange()]"/>
+    <testcase name="testNoPercentageChange" classname="com.fractallabs.assignment.TwitterScannerTest" time="0.009" displayname="testNoPercentageChange()" uniqueid="[engine:junit-jupiter]/[class:com.fractallabs.assignment.TwitterScannerTest]/[method:testNoPercentageChange()]"/>
+    <testcase name="testNegativePercentageChange" classname="com.fractallabs.assignment.TwitterScannerTest" time="0.007" displayname="testNegativePercentageChange()" uniqueid="[engine:junit-jupiter]/[class:com.fractallabs.assignment.TwitterScannerTest]/[method:testNegativePercentageChange()]"/>
+    <testcase name="testStoreValueMethod" classname="com.fractallabs.assignment.TwitterScannerTest" time="0.006" displayname="testStoreValueMethod()" uniqueid="[engine:junit-jupiter]/[class:com.fractallabs.assignment.TwitterScannerTest]/[method:testStoreValueMethod()]"/>
+    <testcase name="testAuthWithBuildingConf1" classname="com.fractallabs.assignment.TwitterScannerTest" time="0.922" displayname="testAuthWithBuildingConf1()" uniqueid="[engine:junit-jupiter]/[class:com.fractallabs.assignment.TwitterScannerTest]/[method:testAuthWithBuildingConf1()]"/>
+  </testsuite>
+</testrun>
