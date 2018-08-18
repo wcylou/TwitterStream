@@ -6,7 +6,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.TreeMap;
 
-import twitter4j.FilterQuery;
 import twitter4j.StallWarning;
 import twitter4j.Status;
 import twitter4j.StatusDeletionNotice;
@@ -16,8 +15,6 @@ import twitter4j.TwitterStreamFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
 public class TwitterScanner {
-	int count = 0;
-	TreeMap <Instant, Double> storeValues = new TreeMap<>();
 
 	public static class TSValue {
 		private final Instant timestamp;
@@ -36,9 +33,11 @@ public class TwitterScanner {
 			return val;
 		}
 	}
+	
+	protected int count = 0;
+	protected TreeMap <Instant, Double> storeValues = new TreeMap<>();
 
 	public TwitterScanner(String companyName) {
-		// ...
 		 ConfigurationBuilder cb = new ConfigurationBuilder();
 	        cb.setJSONStoreEnabled(true)
 	        .setOAuthConsumerKey("QQ8vZHPiA5899QYcR1AGT7WR5")
@@ -48,24 +47,30 @@ public class TwitterScanner {
 	        
 			 StatusListener listener = new StatusListener() {
 		
-		            public void onStatus(Status status) {       	
-		        		count++;
-		            	System.out.println(count);
-		            	System.out.println(status);
+		            public void onStatus(Status status) {
+		            	if (status.getText().contains(companyName)) {
+		            		count++;
+		            		System.out.println(companyName + " COUNT: " + count);
+		            	}
 		            }
+		            
 		            public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
-		                System.out.println("Status deletion notice id:" + statusDeletionNotice.getStatusId());
+//		                System.out.println("Status deletion notice id:" + statusDeletionNotice.getStatusId());
 		            }
+		            
 		            public void onTrackLimitationNotice(int numberOfLimitedStatuses) {
 		                System.out.println("Track limitation notice:" + numberOfLimitedStatuses);
 		            }
+		            
 		            public void onException(Exception ex) {
-		            	ex.printStackTrace();
+//		            	ex.printStackTrace();
 		            }
+		            
 		            @Override
 		            public void onScrubGeo(long userId, long upToStatusId) {
 		                System.out.println("Scrub_geo. User id:" + userId + " up to status id:" + upToStatusId);
 		            }
+		            
 		            @Override
 		            public void onStallWarning(StallWarning warning) {
 		                System.out.println("Stall stall warning:" + warning);
@@ -75,20 +80,20 @@ public class TwitterScanner {
 	        TwitterStreamFactory tf = new TwitterStreamFactory(cb.build());
 	        TwitterStream twitterStream = tf.getInstance();
 	        twitterStream.addListener(listener);
-	        twitterStream.filter(new FilterQuery(companyName));
+	        twitterStream.sample();
+
 	}
 
 	public void run() {
 		// Begin aggregating mentions. Every hour, "store" the relative change
 		// (e.g. write it to System.out).
 		Instant lastKey = storeValues.lastKey();
-		System.out.println("Last key: " + lastKey);
 		double lastValue = storeValues.get(lastKey);
 		System.out.println("Last entry: " + lastValue);
 		calculatePercentage(lastValue);
 	}
 
-	public double calculatePercentage(double lastValue) {
+	public Double calculatePercentage(Double lastValue) {
 		DecimalFormat df = new DecimalFormat("#.00"); 
 		double change;
 		if (count/lastValue > 1) {
@@ -107,21 +112,18 @@ public class TwitterScanner {
 	}
 
 	protected void storeValue(TSValue value) {
-		// ...
 		if (storeValues.size() == 0) {
 			storeValues.put(value.getTimestamp(), value.getVal());
 		}
 		else {
 			System.out.println("TreeMap Size is " + storeValues.size());
 			run();
-		storeValues.put(value.getTimestamp(), value.getVal());
+			storeValues.put(value.getTimestamp(), value.getVal());
 		}
 	}
 	
-	
-
 	public static void main(String... args) {
-		TwitterScanner scanner = new TwitterScanner("Wilson");
+		TwitterScanner scanner = new TwitterScanner("Facebook");
 		scanner.startTimer();
 	}
 	
@@ -136,7 +138,8 @@ public class TwitterScanner {
 		    	System.out.println(count);
 		    	count = 0;
 		    }
-		}, 10000, 1000*10);
+		}, 30000, 1000*30);
+		//* 6 each for hour
 }
 	
 }
