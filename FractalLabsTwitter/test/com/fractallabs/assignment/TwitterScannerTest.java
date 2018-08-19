@@ -41,10 +41,12 @@ class TwitterScannerTest {
 	private Instant i3;
 
 	private LocalDateTime dateTime;
+	
+	protected String [] searchCompanies = {"Facebook", "Microsoft", "Barclays"};
 
 	@BeforeEach
 	void setUp() {
-		twitScan = new TwitterScanner("Facebook");
+		twitScan = new TwitterScanner(searchCompanies);
 		twitScan.count = 50;
 		twitScan.storeValues = new TreeMap<>();
 
@@ -91,21 +93,21 @@ class TwitterScannerTest {
 	@DisplayName("Test Percentage Change between Hours = 0")
 	void testNoPercentageChange() {
 		twitScan.storeValues.put(i1, 50.00);
-		assertEquals(0, twitScan.calculatePercentage(twitScan.storeValues.get(i1)), 0.1);
+		assertEquals(0, twitScan.calculatePercentage(i1, twitScan.storeValues.get(i1)), 0.1);
 	}
 
 	@Test
 	@DisplayName("Test Percentage Change between Hours is Positive")
 	void testPositivePercentageChange() {
 		twitScan.storeValues.put(i2, 60.00);
-		assertEquals(16.6, twitScan.calculatePercentage(twitScan.storeValues.get(i2)), 0.1);
+		assertEquals(16.6, twitScan.calculatePercentage(i2, twitScan.storeValues.get(i2)), 0.1);
 	}
 
 	@Test
 	@DisplayName("Test Percentage Change between Hours is Negative")
 	void testNegativePercentageChange() {
 		twitScan.storeValues.put(i3, 40.00);
-		assertEquals(25, twitScan.calculatePercentage(twitScan.storeValues.get(i3)), 0.1);
+		assertEquals(25, twitScan.calculatePercentage(i3, twitScan.storeValues.get(i3)), 0.1);
 	}
 
 	@Test
