@@ -1,21 +1,2 @@
-Company: Facebook, Time: 2018-08-19T18:32:45.138Z, Change: null
-Company: Facebook, Time: 2018-08-19T18:33:45.126Z, Change: 0.0
-Company: [Ljava.lang.String;@66ffec9, Time: 2018-08-19T21:53:57.174Z, Change: null
-Company: [Ljava.lang.String;@66ffec9, Time: 2018-08-19T21:54:07.173Z, Change: NaN
-Company: [Ljava.lang.String;@66ffec9, Time: 2018-08-19T21:54:17.178Z, Change: Infinity
-Company: [Ljava.lang.String;@5f0c4bcb, Time: 2018-08-19T21:54:51.929Z, Change: null
-Company: [Ljava.lang.String;@5f0c4bcb, Time: 2018-08-19T21:55:01.932Z, Change: Infinity
-Company: [Ljava.lang.String;@5f0c4bcb, Time: 2018-08-19T21:55:11.934Z, Change: 0.0
-Company: [Ljava.lang.String;@5f0c4bcb, Time: 2018-08-19T21:55:21.934Z, Change: 100.0
-Company: [Ljava.lang.String;@672ae99a, Time: 2018-08-19T21:55:57.162Z, Change: null
-Company: [Ljava.lang.String;@672ae99a, Time: 2018-08-19T21:56:07.164Z, Change: 0.0
-Company: [Ljava.lang.String;@672ae99a, Time: 2018-08-19T21:56:17.165Z, Change: 100.0
-Company: [Ljava.lang.String;@672ae99a, Time: 2018-08-19T21:56:27.170Z, Change: NaN
-Company: [Ljava.lang.String;@672ae99a, Time: 2018-08-19T21:56:37.171Z, Change: NaN
-Company: [Ljava.lang.String;@672ae99a, Time: 2018-08-19T21:56:47.172Z, Change: Infinity
-Company: [Ljava.lang.String;@4c04b686, Time: 2018-08-19T21:58:03.308Z, Change: null
-Company: [Ljava.lang.String;@4c04b686, Time: 2018-08-19T21:59:03.309Z, Change: 200.0
-Company: [Ljava.lang.String;@4c04b686, Time: 2018-08-19T22:00:03.312Z, Change: 0.0
-Company: [Ljava.lang.String;@4c04b686, Time: 2018-08-19T22:01:03.314Z, Change: 0.0
-Company: [Ljava.lang.String;@7776834a, Time: 2018-08-19T22:03:06.538Z, Change: null
-Company: [Ljava.lang.String;@66ffec9, Time: 2018-08-19T22:23:51.149Z, Change: null
+Company: [Facebook, Microsoft, Google], Time: 2018-08-20T03:23:07.027Z, Change: null
+Company: [Facebook, Microsoft, Google], Time: 2018-08-20T04:23:07.052Z, Change: 3.125

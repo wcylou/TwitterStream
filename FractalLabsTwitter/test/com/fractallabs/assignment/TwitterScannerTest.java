@@ -2,10 +2,7 @@ package com.fractallabs.assignment;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import static org.mockito.Mockito.doCallRealMethod;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -18,6 +15,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import com.fractallabs.assignment.TwitterScanner.TSValue;
 
@@ -31,27 +29,28 @@ import twitter4j.conf.ConfigurationBuilder;
 class TwitterScannerTest {
 
 	private TSValue ts;
-
 	private TwitterScanner twitScan;
-
 	private ConfigurationBuilder builder;
-
 	private Instant i1;
 	private Instant i2;
 	private Instant i3;
-
 	private LocalDateTime dateTime;
+	private String [] searchCompanies = {"Facebook", "Microsoft", "Barclays"};
+	private String oAuthConsumerKey = "";
+	private String oAuthConsumerSecret = "";
 	
-	protected String [] searchCompanies = {"Facebook", "Microsoft", "Barclays"};
+	TwitterScanner twitScanTest;
 
 	@BeforeEach
 	void setUp() {
 		twitScan = new TwitterScanner(searchCompanies);
-		twitScan.count = 50;
+		TwitterScanner.count = 50;
 		twitScan.storeValues = new TreeMap<>();
+		
+		twitScanTest = new TwitterScanner(searchCompanies);
 
 		dateTime = LocalDateTime.of(2018, Month.AUGUST, 14, 14, 40);
-		i1 = dateTime.atZone(ZoneId.of("Europe/Paris")).toInstant();
+		i1 = dateTime.atZone(ZoneId.of("Europe/London")).toInstant();
 		i2 = i1.plus(1, ChronoUnit.HOURS);
 		i3 = i2.plus(1, ChronoUnit.HOURS);
 
@@ -71,11 +70,11 @@ class TwitterScannerTest {
 	@Test
 	@DisplayName("Testing Twitter4j Authentication")
 	void testAuthWithBuildingConf1() throws Exception {
-		// setup
+		// Setup
 		Twitter twitter = new TwitterFactory(builder.build()).getInstance();
 
-		// exercise & verify
-		twitter.setOAuthConsumer("QQ8vZHPiA5899QYcR1AGT7WR5", "Beh6mEMfRwLrfSdIlpBI1ee12Ia1HuzIMPYVNtFhynPmswFRWJ");
+		// Exercise & verify
+		twitter.setOAuthConsumer(oAuthConsumerKey, oAuthConsumerSecret);
 		OAuth2Token token = twitter.getOAuth2Token();
 		assertEquals("bearer", token.getTokenType());
 
@@ -90,7 +89,7 @@ class TwitterScannerTest {
 	}
 
 	@Test
-	@DisplayName("Test Percentage Change between Hours = 0")
+	@DisplayName("Test Percentage Change between Hours is 0")
 	void testNoPercentageChange() {
 		twitScan.storeValues.put(i1, 50.00);
 		assertEquals(0, twitScan.calculatePercentage(i1, twitScan.storeValues.get(i1)), 0.1);
@@ -115,6 +114,18 @@ class TwitterScannerTest {
 	void testEmptyTreeMapStoreValueMethod() {
 		twitScan.storeValue(ts);
 		assertEquals(1, twitScan.storeValues.size());
+	}
+	
+	@Test
+	@DisplayName("Test Second or Greater Entry Into TreeMap")
+	void testTreeMapStoreValueMethod() {
+		// Place first entry into TreeMap
+		twitScanTest.storeValues.put(i1, 50.00);
+		TwitterScanner spyProperties = Mockito.spy(twitScanTest);
+		// Mock inner method
+		Mockito.doReturn(100.00).when(spyProperties).calculatePercentage(i2, 100.00);
+		spyProperties.storeValue(ts);
+		verify(spyProperties).storeValue(ts);
 	}
 
 }
