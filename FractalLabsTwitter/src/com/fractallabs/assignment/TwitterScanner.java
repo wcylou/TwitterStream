@@ -27,7 +27,7 @@ import twitter4j.conf.ConfigurationBuilder;
 ||         Author:  [Wilson Lou]
 ||
 ||        Purpose:  [Find out how the number of mentions of a company/companies on Twitter 
-||		change over time.]
+||			change over time.]
 ||
 ||  Inherits From:  [None]
 ||
@@ -36,27 +36,27 @@ import twitter4j.conf.ConfigurationBuilder;
 |+-------------------------------------------------------------------------------------------------
 ||
 ||      Constants:  [TreeMap <Instant, Double> storeValues: holds timestamp and absolute count,
-||		TreeMap <Instant, Double> changeValues: holds timestamp and percentage change,
-||		String [] searchCompanies: filter tweets by companies,
-||		int taskScheduleMilliseconds: how often the count is reset,
-||		int startHour: 24 hour time - hour the application will run from,
-||		int endHour: 24 hour time - hour the application will stop running,
-||		int currentHour: 24 hour time - current system time hour,
-||		String oAuthConsumerKey: Twitter OAuth token details,
-||		String oAuthConsumerSecret: Twitter OAuth token details,
-||		String oAuthAccessToken: Twitter OAuth token details,
-||		String oAuthAccessTokenSecret: Twitter OAuth token details]
+||			TreeMap <Instant, Double> changeValues: holds timestamp and percentage change,
+||			String [] searchCompanies: filter tweets by companies,
+||			int taskScheduleMilliseconds: how often the count is reset,
+||			int startHour: 24 hour time - hour the application will run from,
+||			int endHour: 24 hour time - hour the application will stop running,
+||			int currentHour: 24 hour time - current system time hour,
+||			String oAuthConsumerKey: Twitter OAuth token details,
+||			String oAuthConsumerSecret: Twitter OAuth token details,
+||			String oAuthAccessToken: Twitter OAuth token details,
+||			String oAuthAccessTokenSecret: Twitter OAuth token details]
 ||
 |+-------------------------------------------------------------------------------------------------
 ||
 ||   Constructors:  [TwitterScanner(String [] companyNames)]
 ||
 ||  Class Methods:  [main(String... args),
-||		run(),
-|| 		startTimer(),
-|| 		storeValue(TSValue value),
-|| 		Double calculatePercentage(Instant lastKey, Double lastValue),
-|| 		writeMap()]		
+||			run(),
+|| 			startTimer(),
+|| 			storeValue(TSValue value),
+|| 			Double calculatePercentage(Instant lastKey, Double lastValue),
+|| 			writeMap()]		
 ||
 ++-------------------------------------------------------------------------------------------------*/
 
@@ -77,14 +77,14 @@ public class TwitterScanner {
 	|+------------------------------------------------------------------------------
 	||
 	||      Constants:  [Instant timestamp: filter tweets by companies,
-	||		double val: count of tweets for set time period]
+	||			double val: count of tweets for set time period]
 	||
 	|+------------------------------------------------------------------------------
 	||
 	||   Constructors:  [TSValue(Instant timestamp, double val)]
 	||
 	||  Class Methods:  [Instant getTimestamp(),
-	|| 		double getVal()]
+	|| 			double getVal()]
 	||
 	++------------------------------------------------------------------------------*/
 
