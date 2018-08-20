@@ -36,7 +36,7 @@ import twitter4j.conf.ConfigurationBuilder;
 |+-------------------------------------------------------------------------------------------------
 ||
 ||      Constants:  [TreeMap <Instant, Double> storeValues: holds timestamp and absolute count,
-||					 TreeMap <Instant, Double> changeValues: holds timestamp and percentage change,
+||		TreeMap <Instant, Double> changeValues: holds timestamp and percentage change,
 ||					 String [] searchCompanies: filter tweets by companies,
 ||					 int taskScheduleMilliseconds: how often the count is reset,
 ||					 int startHour: 24 hour time - hour the application will run from,
